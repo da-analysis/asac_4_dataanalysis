@@ -14,7 +14,6 @@ from pyspark.sql.functions import col, to_date
 
 # COMMAND ----------
 
-#
 amazon_review = sc.textFile('dbfs:/FileStore/amazon/data/All_Amazon_Review_Sample50000.json/part-00000')
 import json
 ar_json = amazon_review.map(json.loads)
@@ -60,6 +59,7 @@ display(amazon_review_df)
 
 amazon_review_pd = amazon_review_df.toPandas()
 
+
 # COMMAND ----------
 
 # MAGIC %md
@@ -67,7 +67,7 @@ amazon_review_pd = amazon_review_df.toPandas()
 
 # COMMAND ----------
 
-(amazon_review_pd.isnull().sum() / len(amazon_review_pd)) * 100
+amazon_review_pd.isnull().sum() / len(amazon_review_pd) * 100
 
 
 # COMMAND ----------
@@ -143,6 +143,19 @@ display(review_data1)
 
 # COMMAND ----------
 
+#코드설명..
+#over(window_spec.rowsBetween(Window.unboundedPreceding, -1)):
+#over 함수는 윈도우 함수를 적용하기 위해 사용됩니다. 이 함수의 인자로는 윈도우 스펙을 지정합니다.
+#window_spec는 윈도우 스펙을 정의하는데 사용되며, 여기서는 asin 열을 기준으로 파티션하고 reviewTime 열을 기준으로 정렬하여 윈도우를 설정합니다.
+#rowsBetween(Window.unboundedPreceding, -1)은 윈도우 함수가 적용되는 범위를 정의합니다. 여기서는 현재 행 이전까지의 모든 행을 포함하여 윈도우를 #설정합니다.
+#-------------------------------------------------------
+#판다스 사용시
+#review_data_pd['reviewTime'] = pd.to_datetime(review_data_pd['reviewTime'])
+#review_data_pd['before_today_review_count'] = review_data_pd.groupby('asin')['reviewTime'].cumcount()
+
+
+# COMMAND ----------
+
 # style 열이 null이 아닌 값을 선택
 notnull_style = amazon_review_df.filter(col("style").isNotNull())
 
@@ -166,10 +179,6 @@ amazon_review_df = amazon_review_df.select(
     col("style").getItem("value").alias("style_value")
 )
 display(amazon_review_df)
-
-# COMMAND ----------
-
-
 
 # COMMAND ----------
 
@@ -201,7 +210,7 @@ display(amazon_review_df)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC ##### review text, summary 의 경우 결측치 reviewText 0.082, summary 0.114, >> 제거할지 다른 값으로 채워 넣을지 고민 필요
+# MAGIC ##### review text, summary 의 경우 결측치 reviewText 0.082, summary 0.114, >> 제거할지 다른 값으로 채워 넣을지(중립적인언어?)고민 필요
 # MAGIC ##### verified , image_exist 의 경우 추후에 원 핫 인코딩 필요
 
 # COMMAND ----------
