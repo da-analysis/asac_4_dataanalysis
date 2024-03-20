@@ -1233,4 +1233,43 @@ display(meta_cell.head(100)) # new_rank 아직 처리안한 최종 데이터셋
 
 # COMMAND ----------
 
+meta_cell["rank2"] = meta_cell["rank"].replace(",", "")
+
+# COMMAND ----------
+
+display(meta_cell["rank2"].head(10))
+
+# COMMAND ----------
+
+import re
+
+def extract_first_number(text):
+    # 쉼표를 제거한 후 숫자 추출
+    match = re.search(r'\d+', text.replace(",", ""))
+    if match:
+        return int(match.group())
+    else:
+        return np.nan
+
+# "rank" 열에서 첫 번째 숫자를 추출하여 "new_rank" 열 생성
+meta_cell["new_rank"] = meta_cell["rank"].apply(extract_first_number)
+
+# COMMAND ----------
+
+display(meta_cell.head(100))
+
+# COMMAND ----------
+
+meta_cell = meta_cell.drop(columns=["rank2"])
+
+# COMMAND ----------
+
+display(meta_cell.head(100))
+
+# COMMAND ----------
+
+meta_cell.info()
+
+# COMMAND ----------
+
 
