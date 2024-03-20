@@ -14,6 +14,7 @@ from pyspark.sql.functions import col, to_date
 
 # COMMAND ----------
 
+#
 amazon_review = sc.textFile('dbfs:/FileStore/amazon/data/All_Amazon_Review_Sample50000.json/part-00000')
 import json
 ar_json = amazon_review.map(json.loads)
