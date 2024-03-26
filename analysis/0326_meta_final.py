@@ -356,7 +356,7 @@ display(df)
 # COMMAND ----------
 
 path2 = "dbfs:/FileStore/amazon/metadata/v3/sports_and_outdoors_v3/to_parquet/sports_and_outdoors_v3.parquet"
-df2 = spark.read.parquet(path)
+df2 = spark.read.parquet(path2)
 
 # COMMAND ----------
 
@@ -370,7 +370,7 @@ df.write.saveAsTable(table_name)
 
 # COMMAND ----------
 
-table_name1 = "asac.sports_and_outdoors_fin"
+table_name1 = "asac.sports_and_outdoors_fin_v2"
 df2.write.saveAsTable(table_name1)
 
 # COMMAND ----------
@@ -378,3 +378,13 @@ df2.write.saveAsTable(table_name1)
 # MAGIC %sql
 # MAGIC select *
 # MAGIC from asac.meta_Cell_Phones_and_Accessories_v2
+
+# COMMAND ----------
+
+# MAGIC %sql
+# MAGIC select *
+# MAGIC from asac.sports_and_outdoors_fin_v2
+
+# COMMAND ----------
+
+
