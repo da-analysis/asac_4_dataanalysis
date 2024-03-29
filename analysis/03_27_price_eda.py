@@ -525,7 +525,7 @@ filtered_cat3_value_counts
 
 # COMMAND ----------
 
-len(filtered_cat3_value_counts) # 25개도 많지만 최소한 나머지는 other 같이 묶어야 할 듯
+len(filtered_cat3_value_counts) # 25개도 많지만 최소한 나9999머지는 other 같이 묶어야 할 듯
 
 # COMMAND ----------
 
