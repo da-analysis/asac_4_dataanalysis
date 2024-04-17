@@ -30,7 +30,7 @@ feature_schema = StructType([
     StructField("reviewText", StringType()),
     StructField("summary", StringType()),
     StructField("unixReviewTime", LongType()),
-    StructField("style", MapType(StringType(), StringType())),
+    StructField("style", MapType(StringType(), StringType())),#json처리?
     StructField("image", StringType())  
 ])
 
@@ -120,6 +120,11 @@ amazon_review_df = amazon_review_df.withColumn("reviewTime", to_date("reviewTime
                                    .withColumn("day", dayofmonth("reviewTime"))
 display(amazon_review_df)
 
+
+# COMMAND ----------
+
+filtered_df = amazon_review_df[amazon_review_df['reviewText'] == '{"message":null}']
+display(filtered_df)
 
 # COMMAND ----------
 
