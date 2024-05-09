@@ -2,7 +2,7 @@
 # MAGIC %sql
 # MAGIC SELECT * FROM `hive_metastore`.`asac`.`image_model`;
 
-# COMMAND ----------
+# COMMAND ---------
 
 df = _sqldf
 
